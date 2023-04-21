@@ -7,7 +7,6 @@
 
 #-------------------------- Question 1a ---------------------------------------
 
-
 def dna_match_topdown_helper(D1, D2, m, n):
     """
     Recursive helper function for dna_match_topdown function.
@@ -40,33 +39,38 @@ def dna_match_topdown(DNA1, DNA2):
     return dna_match_topdown_helper(DNA1, DNA2, (len(DNA1) - 1), (len(DNA2) - 1))
 
 
-s1 = "ATAGTTCCGTCAAA"
-s2 = "GTGTTCCCGTCAAA"
-
-print(dna_match_topdown(s1, s2))
-
-
 
 #-------------------------- Question 1b ---------------------------------------
 
+def dna_match_bottomup(DNA1, DNA2):
+    """
+    The dna_match_bottomup function uses bottom up dynamic programming to find
+    the longest matching string between two DNA input sequencs.
+    :param DNA1: input DNA sequence - string of A, C, G, T
+    :param DNA2: input DNA sequence - string of A, C, G, T
+    :return: length of longest continuous length of DNA string alignment (and sequence).
+    """
+    # CITATION: code from Module 3 Exploration 3.3
+    # Find the lengths of input DNA sequences
+    m = len(DNA1)
+    n = len(DNA2)
 
+    dna_cache = [[0 for x in range(n + 1)] for x in range(m + 1)]
 
+    for i in range(m + 1):
+        for j in range(n + 1):
+            if i == 0 or j == 0:
+                dna_cache[i][j] = 0
+            elif DNA1[i - 1] == DNA2[j - 1]:
+                dna_cache[i][j] = dna_cache[i - 1][j - 1] + 1
+            else:
+                dna_cache[i][j] = max(dna_cache[i - 1][j], dna_cache[i][j - 1])
 
-#-------------------------- Question 2a ---------------------------------------
-
-
-
-
-#-------------------------- Question 2a ---------------------------------------
-
-
-
-
+    # The answer is located at the last position in the 2-d array, because all sub problems have been solved.
+    return dna_cache[m][n]
 
 
 #--------------------------    TESTS     ---------------------------------------
-
-
 
 # TEST FOR 1A
 
@@ -74,3 +78,11 @@ s1 = "ATAGTTCCGTCAAA"
 s2 = "GTGTTCCCGTCAAA"
 
 print(dna_match_topdown(s1, s2))
+
+
+# TEST FOR 1B
+
+print(dna_match_bottomup(s1, s2))
+
+
+# Test For 1C

@@ -17,7 +17,6 @@ def dna_match_topdown_helper(D1, D2, m, n):
     :return: recursive function calls
     """
     # CITATION: code from Module 3 Exploration 3.3
-
     if m < 0 or n < 0:
         return 0
     elif D1[m] == D2[n]:
